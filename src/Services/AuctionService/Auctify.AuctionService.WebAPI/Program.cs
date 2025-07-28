@@ -11,9 +11,11 @@ builder.Host.UseOrleans(siloBuilder => {
 
 builder.Services.AddSignalR();
 
-WebApplication app = builder.Build(); 
+WebApplication app = builder.Build();
 
+app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 app.MapHub<AuctionHub>("/auctionHub");
  
 
