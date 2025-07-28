@@ -3,8 +3,19 @@ using Auctify.AuctionService.WebAPI.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-WebApplication app = builder.Build();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args); 
+
+builder.Host.UseOrleans(siloBuilder => {
+    siloBuilder.UseLocalhostClustering();
+});
+
+builder.Services.AddSignalR();
+
+WebApplication app = builder.Build(); 
+
+
+app.MapHub<AuctionHub>("/auctionHub");
+ 
 
 RouteGroupBuilder auctionGroup = app.MapGroup("api/auctions");
 
