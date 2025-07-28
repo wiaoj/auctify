@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+    <h1>Auctify Canlı Takip</h1>
+    <h3>Fiyat: <span id="price">100.00 TL</span></h3>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder().withUrl("/auctionHub").build();
+        connection.on("NewBidReceived", (auctionId, newPrice) => {
+            if (auctionId === "nadir-pulu") {
+                document.getElementById("price").innerText = newPrice.toFixed(2) + " TL";
+            }
+        });
+        connection.start();
+    </script>
+</body>
+</html>
