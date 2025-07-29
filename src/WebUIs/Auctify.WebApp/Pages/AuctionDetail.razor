@@ -1,0 +1,114 @@
+﻿@page "/auctions/{AuctionId}"
+@using Auctify.WebApp.Services
+@inject HttpClient Http
+@inject AuctionHubService HubService
+@implements IAsyncDisposable
+
+<h3>Müzayede Detayı: Auctify-001</h3>
+
+@if (auctionData != null) {
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@auctionData.Title</h5>
+            <p class="card-text">
+                Mevcut Fiyat:
+                <strong style="color: forestgreen; font-size: 1.5rem;">
+                    @auctionData.CurrentPrice.ToString("C")
+                </strong>
+            </p>
+            <div class="input-group mb-3">
+                <input type="number" class="form-control" @bind="newBidAmount" />
+                <button class="btn btn-primary" @onclick="PlaceBid" disabled="@isSubmitting">
+                    @if (isSubmitting) {
+                        <span class="spinner-border spinner-border-sm"></span>
+                    }
+                    else {
+
+                        <span>Teklif Ver</span>
+                    }
+                </button>
+            </div>
+            @if (!string.IsNullOrEmpty(statusMessage)) {
+                <p class="mt-2 @statusMessageCssClass">@statusMessage</p>
+            }
+        </div>
+    </div>
+}
+else {
+    <p><em>Müzayede verileri yükleniyor...</em></p>
+}
+
+
+@code {
+    [Parameter]
+    public string AuctionId { get; set; } = "Auctify-001"; // Şimdilik sabit bir ID kullanıyoruz
+
+    private AuctionData? auctionData;
+    private decimal newBidAmount;
+    private string? statusMessage;
+    private string statusMessageCssClass = "";
+    private bool isSubmitting = false;
+
+    // Bileşen yüklendiğinde çalışacak ana metod
+    protected override async Task OnInitializedAsync() {
+        // 1. SignalR olayını dinlemeye başla
+        HubService.OnNewBidReceived += HandleNewBid;
+
+        // 2. SignalR bağlantısını başlat
+        await HubService.StartConnectionAsync(AuctionId);
+
+        // 3. İlk veriyi API'den çek 
+        try {
+            auctionData = await Http.GetFromJsonAsync<AuctionData>($"api/auctions/{AuctionId}");
+            if (auctionData != null) {
+                // Bir sonraki teklif için mantıklı bir başlangıç değeri ata
+                newBidAmount = auctionData.CurrentPrice + 10;
+            }
+        }
+        catch (Exception ex) {
+            statusMessage = $"Veri çekilemedi: {ex.Message}";
+            statusMessageCssClass = "text-danger";
+        }
+    }
+
+    // Teklif Ver butonuna tıklandığında
+    private async Task PlaceBid() {
+        isSubmitting = true; 
+        var response = await Http.PostAsJsonAsync($"api/auctions/{AuctionId}/bids", new { amount = newBidAmount });
+
+        if (response.IsSuccessStatusCode) {
+            statusMessage = "Teklifiniz gönderildi, onay bekleniyor...";
+            statusMessageCssClass = "text-info";
+        }
+        else {
+            statusMessage = "Teklif gönderilemedi. Lütfen tekrar deneyin.";
+            statusMessageCssClass = "text-danger";
+        }
+        isSubmitting = false;
+    }
+
+    // SignalR'dan yeni teklif geldiğinde tetiklenecek metod
+    private void HandleNewBid(string auctionId, decimal newPrice) {
+        if (auctionData != null && auctionId == this.AuctionId) {
+            auctionData.CurrentPrice = newPrice;
+            newBidAmount = newPrice + 10;
+            statusMessage = $"✓ Yeni teklif alındı!";
+            statusMessageCssClass = "text-success";
+
+            // Arayüzü güncellemesi için Blazor'a haber ver
+            StateHasChanged();
+        }
+    }
+
+    // Bileşen ekrandan kalktığında kaynakları temizle
+    public async ValueTask DisposeAsync() {
+        HubService.OnNewBidReceived -= HandleNewBid;
+        await HubService.DisposeAsync();
+    }
+
+    // API'den gelen veriyi tutmak için basit bir DTO sınıfı
+    public class AuctionData {
+        public string Title { get; set; } = string.Empty;
+        public decimal CurrentPrice { get; set; }
+    }
+}
