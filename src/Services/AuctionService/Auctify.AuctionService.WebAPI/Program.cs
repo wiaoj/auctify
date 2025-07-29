@@ -10,23 +10,30 @@ builder.Services.AddCors(options => {
         policy.WithOrigins("https://localhost:7063")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); 
+              .AllowCredentials();
     });
 });
 
 builder.Host.UseOrleans(siloBuilder => {
     siloBuilder.UseLocalhostClustering();
+
+    siloBuilder.AddAdoNetGrainStorage("AuctifyStorage", options => {
+        options.Invariant = "Npgsql";
+        options.ConnectionString = builder.Configuration.GetConnectionString("PostgreSQL");
+    });
 });
 
 builder.Services.AddSignalR();
 
 WebApplication app = builder.Build();
 
+
 app.UseCors("AllowBlazorApp");
 
 app.UseHttpsRedirection();
 
 app.MapHub<AuctionHub>("/auctionhub");
+
 
 
 RouteGroupBuilder auctionGroup = app.MapGroup("api/auctions");
