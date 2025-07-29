@@ -3,34 +3,30 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Auctify.WebApp.Services;
 public sealed class AuctionHubService : IAsyncDisposable {
-    private HubConnection? _hubConnection;
-    private readonly NavigationManager _navigationManager;
+    private HubConnection? _hubConnection; 
     public event Action<string, decimal>? OnNewBidReceived;
-
-    public AuctionHubService(NavigationManager navigationManager) {
-        _navigationManager = navigationManager;
-    }
+     
 
     public async Task StartConnectionAsync(string auctionId) {
-        var hubUrl = _navigationManager.ToAbsoluteUri("/auctionhub");
+        var hubUrl = "https://localhost:7164/auctionhub";
 
-        _hubConnection = new HubConnectionBuilder()
+        this._hubConnection = new HubConnectionBuilder()
             .WithUrl(hubUrl)
             .WithAutomaticReconnect()
             .Build();
 
-        _hubConnection.On<string, decimal>("NewBidReceived", (receivedAuctionId, newPrice) => {
+        this._hubConnection.On<string, decimal>("NewBidReceived", (receivedAuctionId, newPrice) => {
             if (receivedAuctionId == auctionId) {
                 OnNewBidReceived?.Invoke(receivedAuctionId, newPrice);
             }
         });
 
-        await _hubConnection.StartAsync();
+        await this._hubConnection.StartAsync();
     }
 
     public async ValueTask DisposeAsync() {
-        if (_hubConnection is not null) {
-            await _hubConnection.DisposeAsync();
+        if (this._hubConnection is not null) {
+            await this._hubConnection.DisposeAsync();
         }
     }
 }

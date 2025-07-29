@@ -41,27 +41,23 @@ else {
 
 @code {
     [Parameter]
-    public string AuctionId { get; set; } = "Auctify-001"; // Şimdilik sabit bir ID kullanıyoruz
+    public string AuctionId { get; set; } = "Auctify-001"; 
 
     private AuctionData? auctionData;
     private decimal newBidAmount;
     private string? statusMessage;
     private string statusMessageCssClass = "";
-    private bool isSubmitting = false;
+    private bool isSubmitting = false; 
 
     // Bileşen yüklendiğinde çalışacak ana metod
     protected override async Task OnInitializedAsync() {
-        // 1. SignalR olayını dinlemeye başla
         HubService.OnNewBidReceived += HandleNewBid;
 
-        // 2. SignalR bağlantısını başlat
         await HubService.StartConnectionAsync(AuctionId);
 
-        // 3. İlk veriyi API'den çek 
         try {
             auctionData = await Http.GetFromJsonAsync<AuctionData>($"api/auctions/{AuctionId}");
             if (auctionData != null) {
-                // Bir sonraki teklif için mantıklı bir başlangıç değeri ata
                 newBidAmount = auctionData.CurrentPrice + 10;
             }
         }
@@ -71,7 +67,6 @@ else {
         }
     }
 
-    // Teklif Ver butonuna tıklandığında
     private async Task PlaceBid() {
         isSubmitting = true; 
         var response = await Http.PostAsJsonAsync($"api/auctions/{AuctionId}/bids", new { amount = newBidAmount });
@@ -84,10 +79,10 @@ else {
             statusMessage = "Teklif gönderilemedi. Lütfen tekrar deneyin.";
             statusMessageCssClass = "text-danger";
         }
-        isSubmitting = false;
+        isSubmitting = false; 
+        StateHasChanged();
     }
 
-    // SignalR'dan yeni teklif geldiğinde tetiklenecek metod
     private void HandleNewBid(string auctionId, decimal newPrice) {
         if (auctionData != null && auctionId == this.AuctionId) {
             auctionData.CurrentPrice = newPrice;
@@ -95,18 +90,15 @@ else {
             statusMessage = $"✓ Yeni teklif alındı!";
             statusMessageCssClass = "text-success";
 
-            // Arayüzü güncellemesi için Blazor'a haber ver
             StateHasChanged();
         }
     }
 
-    // Bileşen ekrandan kalktığında kaynakları temizle
     public async ValueTask DisposeAsync() {
         HubService.OnNewBidReceived -= HandleNewBid;
         await HubService.DisposeAsync();
     }
 
-    // API'den gelen veriyi tutmak için basit bir DTO sınıfı
     public class AuctionData {
         public string Title { get; set; } = string.Empty;
         public decimal CurrentPrice { get; set; }
