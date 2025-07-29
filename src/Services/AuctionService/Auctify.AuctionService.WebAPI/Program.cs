@@ -3,7 +3,16 @@ using Auctify.AuctionService.WebAPI.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args); 
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowBlazorApp", policy => {
+        policy.WithOrigins("https://localhost:7063")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // SignalR canlý baðlantýsý için bu gereklidir.
+    });
+});
 
 builder.Host.UseOrleans(siloBuilder => {
     siloBuilder.UseLocalhostClustering();
@@ -13,11 +22,12 @@ builder.Services.AddSignalR();
 
 WebApplication app = builder.Build();
 
+app.UseCors("AllowBlazorApp");
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.MapHub<AuctionHub>("/auctionHub");
- 
+
 
 RouteGroupBuilder auctionGroup = app.MapGroup("api/auctions");
 
