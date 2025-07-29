@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 
 namespace Auctify.WebApp.Services;
 public sealed class AuctionHubService : IAsyncDisposable {
-    private HubConnection? _hubConnection; 
+    private HubConnection? _hubConnection;
     public event Action<string, decimal>? OnNewBidReceived;
-     
+
 
     public async Task StartConnectionAsync(string auctionId) {
-        var hubUrl = "https://localhost:7164/auctionhub";
+        string hubUrl = "https://localhost:7164/auctionhub";
 
         this._hubConnection = new HubConnectionBuilder()
             .WithUrl(hubUrl)

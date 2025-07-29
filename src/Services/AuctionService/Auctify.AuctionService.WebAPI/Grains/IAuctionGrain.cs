@@ -3,8 +3,6 @@
 public interface IAuctionGrain : IGrainWithStringKey {
     [Alias(nameof(PlaceBid))]
     Task<bool> PlaceBid(decimal newPrice);
-    [Alias(nameof(GetCurrentPrice))]
-    Task<decimal> GetCurrentPrice();
 
     [Alias(nameof(GetAuctionDetails))]
     Task<AuctionDetails> GetAuctionDetails();
@@ -17,4 +15,16 @@ public sealed record AuctionDetails {
     public required string Title { get; init; }
     [Id(1)]
     public decimal CurrentPrice { get; init; }
+}
+[GenerateSerializer]
+[Alias("Auctify.AuctionService.WebAPI.Grains.AuctionState")]
+public class AuctionState {
+    [Id(0)]
+    public string Title { get; set; } = "Henüz Başlık Belirlenmedi";
+
+    [Id(1)]
+    public decimal CurrentPrice { get; set; } = 100m;
+
+    [Id(2)]
+    public string? LeadingBidderId { get; set; }
 }
