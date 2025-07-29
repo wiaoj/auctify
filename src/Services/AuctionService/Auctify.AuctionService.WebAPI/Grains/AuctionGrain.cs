@@ -1,25 +1,23 @@
-﻿namespace Auctify.AuctionService.WebAPI.Grains;
-public sealed class AuctionGrain : Grain, IAuctionGrain {
-    private decimal _currentPrice = 100;
-    private readonly string _title = "Van Gogh Tablosu";
+﻿using Orleans.Providers;
 
-    public Task<decimal> GetCurrentPrice() {
-        return Task.FromResult(this._currentPrice);
-    }
-
-    public Task<bool> PlaceBid(decimal newPrice) {
-        if (newPrice > this._currentPrice) {
-            this._currentPrice = newPrice;
-            return Task.FromResult(true);
+namespace Auctify.AuctionService.WebAPI.Grains;
+[GrainType("auction")]
+[StorageProvider(ProviderName = "AuctifyStorage")]
+public sealed class AuctionGrain : Grain<AuctionState>, IAuctionGrain {
+    public async Task<bool> PlaceBid(decimal amount) {
+        if (amount > this.State.CurrentPrice) {
+            this.State.CurrentPrice = amount;
+            await WriteStateAsync();
+            return true;
         }
 
-        return Task.FromResult(false);
+        return false;
     }
 
     public Task<AuctionDetails> GetAuctionDetails() {
         return Task.FromResult(new AuctionDetails {
-            Title = this._title,
-            CurrentPrice = this._currentPrice
+            Title = this.State.Title,
+            CurrentPrice = this.State.CurrentPrice
         });
     }
 }
