@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CatalogService", "CatalogSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.CatalogService.Domain", "src\Services\CatalogService\Auctify.CatalogService.Domain\Auctify.CatalogService.Domain.csproj", "{829C62CF-A611-4832-A8C5-4DD6BCBB1424}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.CatalogService.Application", "src\Services\CatalogService\Auctify.CatalogService.Application\Auctify.CatalogService.Application.csproj", "{C272D6B7-34F6-4FC3-9E2D-210633FE1707}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,18 @@ Global
 		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x64.Build.0 = Release|Any CPU
 		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x86.ActiveCfg = Release|Any CPU
 		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x86.Build.0 = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|x64.Build.0 = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Debug|x86.Build.0 = Debug|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|x64.ActiveCfg = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|x64.Build.0 = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|x86.ActiveCfg = Release|Any CPU
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +109,6 @@ Global
 		{AB07D138-F182-4F86-83F3-CEEF8630D12F} = {5E7EC0AF-E837-5B7A-FB41-A4DCCA877D1F}
 		{09734656-93E7-93B1-A2F5-3066A08F773B} = {984BB9B3-3FA3-BE33-9484-CAC21695A33C}
 		{829C62CF-A611-4832-A8C5-4DD6BCBB1424} = {09734656-93E7-93B1-A2F5-3066A08F773B}
+		{C272D6B7-34F6-4FC3-9E2D-210633FE1707} = {09734656-93E7-93B1-A2F5-3066A08F773B}
 	EndGlobalSection
 EndGlobal
