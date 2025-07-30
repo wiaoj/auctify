@@ -6,7 +6,7 @@ using Wiaoj.Extensions;
 
 namespace Auctify.Libraries.Domain.Abstractions;
 public abstract class Aggregate<TId> : Entity<TId>, IAggregate, IHasDomainEvent
-    where TId : class, IId<TId> {
+    where TId : class, IId {
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset? UpdatedAt { get; private set; }
     public DateTimeOffset? DeletedAt { get; private set; }
@@ -51,7 +51,7 @@ public abstract class Aggregate<TId> : Entity<TId>, IAggregate, IHasDomainEvent
     }
 }
 
-public abstract class Entity<TId> where TId : class, IId<TId> {
+public abstract class Entity<TId> where TId : class, IId {
     public TId Id { get; private set; }
 
 #pragma warning disable CS8618
