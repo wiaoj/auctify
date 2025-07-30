@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.Libraries.Domain.Abstractions", "src\Libraries\Auctify.Libraries.Domain.Abstractions\Auctify.Libraries.Domain.Abstractions.csproj", "{AB07D138-F182-4F86-83F3-CEEF8630D12F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CatalogService", "CatalogService", "{09734656-93E7-93B1-A2F5-3066A08F773B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.CatalogService.Domain", "src\Services\CatalogService\Auctify.CatalogService.Domain\Auctify.CatalogService.Domain.csproj", "{829C62CF-A611-4832-A8C5-4DD6BCBB1424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,18 @@ Global
 		{AB07D138-F182-4F86-83F3-CEEF8630D12F}.Release|x64.Build.0 = Release|Any CPU
 		{AB07D138-F182-4F86-83F3-CEEF8630D12F}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB07D138-F182-4F86-83F3-CEEF8630D12F}.Release|x86.Build.0 = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|x64.Build.0 = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Debug|x86.Build.0 = Debug|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|Any CPU.Build.0 = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x64.ActiveCfg = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x64.Build.0 = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x86.ActiveCfg = Release|Any CPU
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,5 +93,7 @@ Global
 		{782E17FE-A561-48C0-A813-EC01FD77D066} = {2313983C-1317-952D-92FE-B695B265D59A}
 		{5E7EC0AF-E837-5B7A-FB41-A4DCCA877D1F} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{AB07D138-F182-4F86-83F3-CEEF8630D12F} = {5E7EC0AF-E837-5B7A-FB41-A4DCCA877D1F}
+		{09734656-93E7-93B1-A2F5-3066A08F773B} = {984BB9B3-3FA3-BE33-9484-CAC21695A33C}
+		{829C62CF-A611-4832-A8C5-4DD6BCBB1424} = {09734656-93E7-93B1-A2F5-3066A08F773B}
 	EndGlobalSection
 EndGlobal

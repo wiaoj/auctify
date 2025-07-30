@@ -1,5 +1,6 @@
 ﻿namespace Auctify.Libraries.Domain.Abstractions.ValueObjects;
-public interface IId<out TSelf, TValue> : IValueObject<TSelf> {
+public interface IId;
+public interface IId<out TSelf, TValue> : IId, IValueObject<TSelf> {
     TValue Value { get; }
     static abstract TSelf From(TValue value);
 }
