@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Auctify.CatalogService.Application\Auctify.CatalogService.Application.csproj" />
+  </ItemGroup>
+
 </Project>

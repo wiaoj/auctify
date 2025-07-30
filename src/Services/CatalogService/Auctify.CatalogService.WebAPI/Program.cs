@@ -14,6 +14,12 @@ WebApplication app = builder.Build();
 
 app.UseHttpsRedirection();
 
+var catalogApi= app.MapGroup("api/catalog");
 
+catalogApi.MapGet("{id:guid}", async (Guid id, GetAuctionItemByIdQueryHandler handler, CancellationToken cancellationToken) => {
+    GetAuctionItemByIdQuery query = new(id);
+    GetAuctionItemByIdQueryResult result = await handler.HandleAsync(query, cancellationToken);
+    return Results.Ok(result);
+});
 
 await app.RunAsync(default(CancellationToken));

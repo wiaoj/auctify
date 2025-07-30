@@ -8,6 +8,14 @@ public sealed record GetAuctionItemByIdQueryResult {
     public Guid Id { get; internal set; }
     public   string Name { get; internal set; }
     public DateTimeOffset CreatedAt { get; internal set; }
+
+    public static GetAuctionItemByIdQueryResult From(AuctionItem auctionItem) {
+        return new GetAuctionItemByIdQueryResult {
+            Id = auctionItem.Id.Value,
+            Name = auctionItem.Name,
+            CreatedAt = auctionItem.CreatedAt
+        };
+    }
 }
 
 public sealed class GetAuctionItemByIdQueryHandler {
@@ -20,10 +28,6 @@ public sealed class GetAuctionItemByIdQueryHandler {
     public async ValueTask<GetAuctionItemByIdQueryResult> HandleAsync(GetAuctionItemByIdQuery query, CancellationToken cancellationToken) {
         AuctionItem auctionItem = await _repository.GetByIdAsync(AuctionItemId.From(query.Id));
          
-        return new GetAuctionItemByIdQueryResult {
-            Id = auctionItem.Id.Value,
-            Name = auctionItem.Name,
-            CreatedAt = auctionItem.CreatedAt
-        };
+        return GetAuctionItemByIdQueryResult.From(auctionItem);
     }
 }
