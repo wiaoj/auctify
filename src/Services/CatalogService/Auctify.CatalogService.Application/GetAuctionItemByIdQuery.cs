@@ -12,4 +12,4 @@ public sealed class GetAuctionItemByIdQueryHandler {
 
         return ValueTask.FromResult(new GetAuctionItemByIdQueryResult());
     }
-}
+} 
