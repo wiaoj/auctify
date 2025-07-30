@@ -1,6 +1,12 @@
+using Auctify.CatalogService.Application;
+using Auctify.CatalogService.Application.Repositories;
+using Auctify.CatalogService.Infrastructure.Persistence.Repositories;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddScoped<GetAuctionItemByIdQueryHandler>(); 
+builder.Services.AddScoped<IAuctionItemRepository, AuctionItemRepository>();
+
 
 WebApplication app = builder.Build();
 
