@@ -1,11 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
+	
+	<ItemGroup> 
+		<PackageReference Include="Wiaoj.Corvus.Transports.RabbitMq" Version="1.0.1" />
+		<PackageReference Include="Wiaoj.Serialization.Extensions.DependencyInjection" Version="1.0.1" />
+		<PackageReference Include="Wiaoj.Serialization.SystemTextJson" Version="1.0.1" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\Auctify.CatalogService.Infrastructure\Auctify.CatalogService.Infrastructure.csproj" />
   </ItemGroup>

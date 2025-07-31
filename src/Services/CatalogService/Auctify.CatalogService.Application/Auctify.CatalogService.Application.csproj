@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Auctify.Libraries.Shared.Contracts\Auctify.Libraries.Shared.Contracts.csproj" />
     <ProjectReference Include="..\Auctify.CatalogService.Domain\Auctify.CatalogService.Domain.csproj" />
   </ItemGroup>
 
