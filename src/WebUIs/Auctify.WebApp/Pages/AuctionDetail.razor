@@ -1,106 +1,121 @@
 ﻿@page "/auctions/{AuctionId}"
+@using System.Globalization
 @using Auctify.WebApp.Services
-@inject HttpClient Http
 @inject AuctionHubService HubService
+@inject IHttpClientFactory HttpClientFactory
 @implements IAsyncDisposable
 
-<h3>Müzayede Detayı: Auctify-001</h3>
-
-@if (auctionData != null) {
-    <div class="card" style="width: 18rem;">
+@if(isLoading) {
+    <p><em>Müzayede verileri yükleniyor... Lütfen bekleyin.</em></p>
+}
+else if(auctionData != null) {
+    <h3 class="mb-3">Müzayede Detayı: @auctionData.Title</h3>
+    <div class="card shadow-sm" style="width: 22rem;">
         <div class="card-body">
-            <h5 class="card-title">@auctionData.Title</h5>
-            <p class="card-text">
-                Mevcut Fiyat:
-                <strong style="color: forestgreen; font-size: 1.5rem;">
-                    @auctionData.CurrentPrice.ToString("C")
-                </strong>
+
+            <p class="card-text mb-1">Mevcut Fiyat:</p>
+            <p class="card-title" style="color: forestgreen; font-size: 2.5rem; font-weight: 600;">
+                @auctionData.CurrentPrice.ToString("C", new CultureInfo("tr-TR"))
             </p>
-            <div class="input-group mb-3">
-                <input type="number" class="form-control" @bind="newBidAmount" />
+
+            <div class="input-group">
+                <span class="input-group-text">₺</span>
+                <input type="number" class="form-control" @bind="newBidAmount" placeholder="Teklifiniz" />
                 <button class="btn btn-primary" @onclick="PlaceBid" disabled="@isSubmitting">
-                    @if (isSubmitting) {
-                        <span class="spinner-border spinner-border-sm"></span>
+                    @if(isSubmitting) {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="visually-hidden">Gönderiliyor...</span>
                     }
                     else {
-
                         <span>Teklif Ver</span>
                     }
                 </button>
             </div>
-            @if (!string.IsNullOrEmpty(statusMessage)) {
-                <p class="mt-2 @statusMessageCssClass">@statusMessage</p>
+
+            @if(!string.IsNullOrEmpty(statusMessage)) {
+                <p class="mt-3 mb-0 @statusMessageCssClass">@statusMessage</p>
             }
         </div>
     </div>
 }
 else {
-    <p><em>Müzayede verileri yükleniyor...</em></p>
+    <p class="text-danger"><em>Bu müzayede yüklenemedi veya bulunamadı. Lütfen daha sonra tekrar deneyin.</em></p>
 }
-
 
 @code {
     [Parameter]
-    public string AuctionId { get; set; } = "Auctify-001"; 
+    public string AuctionId { get; set; }  
+
+    private HttpClient BidHttp => HttpClientFactory.CreateClient("BidService");
+    private HttpClient CatalogHttp => HttpClientFactory.CreateClient("CatalogService");
 
     private AuctionData? auctionData;
     private decimal newBidAmount;
     private string? statusMessage;
     private string statusMessageCssClass = "";
-    private bool isSubmitting = false; 
 
-    // Bileşen yüklendiğinde çalışacak ana metod
+    private bool isLoading = true;
+    private bool isSubmitting = false;
+
     protected override async Task OnInitializedAsync() {
         HubService.OnNewBidReceived += HandleNewBid;
-
         await HubService.StartConnectionAsync(AuctionId);
 
-        try {
-            auctionData = await Http.GetFromJsonAsync<AuctionData>($"api/auctions/{AuctionId}");
-            if (auctionData != null) {
-                newBidAmount = auctionData.CurrentPrice + 10;
+        try { 
+            auctionData = await CatalogHttp.GetFromJsonAsync<AuctionData>($"api/catalog/{AuctionId}");
+            if(auctionData != null) { 
+                newBidAmount = auctionData.CurrentPrice > 0 ? auctionData.CurrentPrice + 10 : 100;
             }
         }
-        catch (Exception ex) {
+        catch(Exception ex) {
             statusMessage = $"Veri çekilemedi: {ex.Message}";
-            statusMessageCssClass = "text-danger";
+            statusMessageCssClass = "text-danger"; 
+        }
+        finally {
+            isLoading = false;
         }
     }
 
     private async Task PlaceBid() {
-        isSubmitting = true; 
-        var response = await Http.PostAsJsonAsync($"api/auctions/{AuctionId}/bids", new { amount = newBidAmount });
+        if(isSubmitting) return;
 
-        if (response.IsSuccessStatusCode) {
-            statusMessage = "Teklifiniz gönderildi, onay bekleniyor...";
-            statusMessageCssClass = "text-info";
+        isSubmitting = true;
+        statusMessage = "Teklifiniz gönderiliyor...";
+        statusMessageCssClass = "text-info";
+        StateHasChanged();  
+
+        var response = await BidHttp.PostAsJsonAsync($"api/bids/{AuctionId}", new { amount = newBidAmount });
+
+        if(response.IsSuccessStatusCode) { 
+            statusMessage = "Teklif başarılı, fiyat güncelleniyor..."; 
         }
         else {
             statusMessage = "Teklif gönderilemedi. Lütfen tekrar deneyin.";
             statusMessageCssClass = "text-danger";
         }
-        isSubmitting = false; 
-        StateHasChanged();
+
+        isSubmitting = false;
+        StateHasChanged();  
     }
 
-    private void HandleNewBid(string auctionId, decimal newPrice) {
-        if (auctionData != null && auctionId == this.AuctionId) {
+    private void HandleNewBid(string auctionId, decimal newPrice) { 
+        if(auctionData != null && auctionId == AuctionId) {
             auctionData.CurrentPrice = newPrice;
             newBidAmount = newPrice + 10;
             statusMessage = $"✓ Yeni teklif alındı!";
-            statusMessageCssClass = "text-success";
-
-            StateHasChanged();
+            statusMessageCssClass = "text-success"; 
+            InvokeAsync(StateHasChanged);
         }
     }
 
     public async ValueTask DisposeAsync() {
         HubService.OnNewBidReceived -= HandleNewBid;
         await HubService.DisposeAsync();
-    }
-
+    }  
+     
     public class AuctionData {
-        public string Title { get; set; } = string.Empty;
+        public Guid Id { get; set; }
+        public string Title { get; set; }  
         public decimal CurrentPrice { get; set; }
     }
 }

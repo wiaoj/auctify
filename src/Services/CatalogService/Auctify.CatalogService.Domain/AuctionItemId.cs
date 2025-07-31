@@ -4,6 +4,8 @@ using Wiaoj;
 namespace Auctify.CatalogService.Domain;
 public sealed record AuctionItemId : IId<AuctionItemId, Guid> {
     public Guid Value { get; }
+
+    private AuctionItemId() { }
     private AuctionItemId(Guid value) {
         this.Value = value;
     }

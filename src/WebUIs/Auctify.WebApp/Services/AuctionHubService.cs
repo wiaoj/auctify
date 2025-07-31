@@ -7,7 +7,7 @@ public sealed class AuctionHubService : IAsyncDisposable {
 
 
     public async Task StartConnectionAsync(string auctionId) {
-        string hubUrl = "https://localhost:7164/auctionhub";
+        string hubUrl = "https://localhost:7239/auctionhub";
 
         this._hubConnection = new HubConnectionBuilder()
             .WithUrl(hubUrl)

@@ -1,4 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Auctify.AuctionService.WebAPI.Hubs;
+namespace Auctify.BiddingService.WebAPI.Hubs;
 public sealed class AuctionHub : Hub;

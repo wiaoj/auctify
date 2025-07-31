@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject NavigationManager NavManager
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Auctify.WebApp</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -8,27 +10,35 @@
 </div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="nav flex-column">
+    <nav class="flex-column nav">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
             </NavLink>
-        </div> 
-        <div class="nav-item px-3"> 
-            <NavLink class="nav-link" href="/auctions/Auctify-001">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Açık Arttırma
-            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <!-- Normal bir <a> etiketi yerine NavLink kullanmak daha iyi bir pratiktir,
+                 ancak onclick için <a> da çalışır. -->
+            <a class="nav-link" href="javascript:void(0)" @onclick="GoToRandomAuction" style="cursor: pointer;">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Rastgele Müzayede
+            </a>
         </div>
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
-
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
+    private void ToggleNavMenu() {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void GoToRandomAuction() {
+        var newAuctionId = Guid.CreateVersion7();
+
+        // forceLoad: true parametresi, Blazor'a sayfayı tamamen yeniden yüklemesini
+        // ve OnInitializedAsync'in tekrar çalışmasını garanti etmesini söyler.
+        NavManager.NavigateTo($"/auctions/{newAuctionId}", forceLoad: true);
     }
 }

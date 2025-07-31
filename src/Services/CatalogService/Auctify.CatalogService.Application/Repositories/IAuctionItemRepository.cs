@@ -2,5 +2,6 @@
 
 namespace Auctify.CatalogService.Application.Repositories;
 public interface IAuctionItemRepository {
-    Task<AuctionItem> GetByIdAsync(AuctionItemId id);
+    Task<AuctionItem?> GetByIdAsync(AuctionItemId id);
+    void Update(AuctionItem auctionItem);
 }
