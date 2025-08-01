@@ -8,6 +8,9 @@ public abstract record DomainEvent : IDomainEvent {
     public DateTimeOffset OccurredAt { get; }
     public DomainEventVersion Version { get; }
 
+#pragma warning disable CS8618  
+    protected DomainEvent() { }
+#pragma warning restore CS8618  
     protected DomainEvent(DateTimeOffset occurredAt, DomainEventVersion version) {
         this.Id = DomainEventId.New(occurredAt);
         this.OccurredAt = occurredAt;
@@ -21,6 +24,7 @@ public abstract record DomainEvent : IDomainEvent {
 public sealed record DomainEventId : IValueObject<DomainEventId, DateTimeOffset> {
     public string Value { get; }
 
+    private DomainEventId() { }
     private DomainEventId(Guid id) {
         this.Value = id.ToString();
     }
@@ -36,6 +40,8 @@ public sealed record DomainEventId : IValueObject<DomainEventId, DateTimeOffset>
 
 public sealed record DomainEventVersion : IValueObject<DomainEventVersion, int> {
     public int Value { get; }
+
+    private DomainEventVersion() { }
     private DomainEventVersion(int value) {
         this.Value = value;
     }

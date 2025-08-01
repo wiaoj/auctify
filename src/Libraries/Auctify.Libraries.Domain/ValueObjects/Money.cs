@@ -6,7 +6,8 @@ using Wiaoj;
 namespace Auctify.Libraries.Domain.ValueObjects;
 public sealed record Money : IValueObject<Money, Amount, Currency>,
     IAdditionOperators<Money, Money, Money>,
-    ISubtractionOperators<Money, Money, Money> {
+    ISubtractionOperators<Money, Money, Money>,
+    IComparisonOperators<Money, Money, bool> {
     public Amount Amount { get; }
     public Currency Currency { get; }
 
@@ -52,6 +53,34 @@ public sealed record Money : IValueObject<Money, Amount, Currency>,
         Amount newAmount = money.Amount * rate.Value;
 
         return new(newAmount, rate.Pair.To);
+    }
+
+    public static bool operator >(Money left, Money right) {
+        Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
+        Preca.ThrowIf(left.Currency != right.Currency,
+            () => new ArgumentException("Money instances must have the same currency for comparison."));
+        return left.Amount > right.Amount;
+    }
+
+    public static bool operator >=(Money left, Money right) {
+        Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
+        Preca.ThrowIf(left.Currency != right.Currency,
+            () => new ArgumentException("Money instances must have the same currency for comparison."));
+        return left.Amount >= right.Amount;
+    }
+
+    public static bool operator <(Money left, Money right) {
+        Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
+        Preca.ThrowIf(left.Currency != right.Currency,
+            () => new ArgumentException("Money instances must have the same currency for comparison."));
+        return left.Amount < right.Amount;
+    }
+
+    public static bool operator <=(Money left, Money right) {
+        Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
+        Preca.ThrowIf(left.Currency != right.Currency,
+            () => new ArgumentException("Money instances must have the same currency for comparison."));
+        return left.Amount <= right.Amount;
     }
 
     public override string ToString() {
