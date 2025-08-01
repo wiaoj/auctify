@@ -8,6 +8,7 @@ public sealed record Amount : IValueObject<Amount, decimal>,
     IAdditionOperators<Amount, Amount, Amount>,
     ISubtractionOperators<Amount, Amount, Amount>,
     IMultiplyOperators<Amount, Amount, Amount>,
+    IMultiplyOperators<Amount, Rate, Amount>,
     IDivisionOperators<Amount, Amount, Amount>,
     IComparisonOperators<Amount, Amount, bool>,
     IEqualityOperators<Amount, Amount, bool> {
@@ -15,12 +16,12 @@ public sealed record Amount : IValueObject<Amount, decimal>,
     private const int Decimals = 2;
 
     private Amount() { }
-    private Amount(decimal value) { 
-        Value = value;
+    private Amount(decimal value) {
+        this.Value = value;
     }
 
-    public static Amount New(decimal value ) {
-        Preca.ThrowIfNegative(value); 
+    public static Amount New(decimal value) {
+        Preca.ThrowIfNegative(value);
         return new(Math.Round(value, Decimals));
     }
 
@@ -32,6 +33,14 @@ public sealed record Amount : IValueObject<Amount, decimal>,
     public static Amount operator *(Amount left, Amount right) {
         Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
         return New(left.Value * right.Value);
+    }
+
+    public static Amount operator *(Amount amount, Rate rate) {
+        Preca.ThrowIfNull(amount);
+        Preca.ThrowIfNull(rate);
+
+        decimal newValue = amount.Value * rate.Value;
+        return New(newValue);
     }
 
     public static Amount operator -(Amount left, Amount right) {
@@ -63,4 +72,4 @@ public sealed record Amount : IValueObject<Amount, decimal>,
         Preca.Extensions.ThrowIfLeftOrRightNull(left, right);
         return left.Value <= right.Value;
     }
-} 
+}
