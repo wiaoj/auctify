@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.Libraries.Shared.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.Libraries.Domain", "src\Libraries\Auctify.Libraries.Domain\Auctify.Libraries.Domain.csproj", "{AA7017F6-E6BE-4AFF-9C1C-A83DC3A39BED}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyExchangeService", "CurrencyExchangeService", "{B99FB07B-1E8D-43E8-B49B-B5BA95E9D340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auctify.CurrencyExchangeService.WebAPI", "src\Services\CurrencyExchangeService\Auctify.CurrencyExchangeService.WebAPI\Auctify.CurrencyExchangeService.WebAPI.csproj", "{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +155,18 @@ Global
 		{AA7017F6-E6BE-4AFF-9C1C-A83DC3A39BED}.Release|x64.Build.0 = Release|Any CPU
 		{AA7017F6-E6BE-4AFF-9C1C-A83DC3A39BED}.Release|x86.ActiveCfg = Release|Any CPU
 		{AA7017F6-E6BE-4AFF-9C1C-A83DC3A39BED}.Release|x86.Build.0 = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|x64.Build.0 = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Debug|x86.Build.0 = Debug|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|x64.ActiveCfg = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|x64.Build.0 = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|x86.ActiveCfg = Release|Any CPU
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -170,6 +186,8 @@ Global
 		{2DB34A1D-AA95-4E72-B078-8990838DF930} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{ACBDC496-EC72-463C-A751-E96CCD755E97} = {5E7EC0AF-E837-5B7A-FB41-A4DCCA877D1F}
 		{AA7017F6-E6BE-4AFF-9C1C-A83DC3A39BED} = {5E7EC0AF-E837-5B7A-FB41-A4DCCA877D1F}
+		{B99FB07B-1E8D-43E8-B49B-B5BA95E9D340} = {984BB9B3-3FA3-BE33-9484-CAC21695A33C}
+		{0CE102C8-D860-4D50-A54B-DB42DFAB3BB5} = {B99FB07B-1E8D-43E8-B49B-B5BA95E9D340}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B78C610-CFBA-4D61-A80C-D796B32E65C4}

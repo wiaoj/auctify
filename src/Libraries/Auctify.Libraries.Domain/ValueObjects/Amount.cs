@@ -12,15 +12,16 @@ public sealed record Amount : IValueObject<Amount, decimal>,
     IComparisonOperators<Amount, Amount, bool>,
     IEqualityOperators<Amount, Amount, bool> {
     public decimal Value { get; init; }
+    private const int Decimals = 2;
 
     private Amount() { }
     private Amount(decimal value) { 
         Value = value;
     }
 
-    public static Amount New(decimal value) {
+    public static Amount New(decimal value ) {
         Preca.ThrowIfNegative(value); 
-        return new(Math.Round(value, 2));
+        return new(Math.Round(value, Decimals));
     }
 
     public static Amount operator +(Amount left, Amount right) {

@@ -17,3 +17,6 @@ public interface IValueObject<out TSelf, in TValue> {
 public interface IValueObject<out TSelf, in TValue1, in TValue2> {
     static abstract TSelf New(TValue1 value1, TValue2 value2);
 }
+public interface IValueObject<out TSelf, T1, T2, T3> {
+    static abstract TSelf New(T1 value1, T2 value2, T3 value3);
+}
