@@ -1,4 +1,6 @@
-﻿namespace Auctify.Libraries.Domain.Abstractions;
+﻿using Auctify.Libraries.Domain.Abstractions.DomainEvents;
+
+namespace Auctify.Libraries.Domain.Abstractions;
 public interface IUpdatable {
     DateTimeOffset? UpdatedAt { get; }
     void SetUpdatedAt(DateTimeOffset updatedAt);
@@ -13,4 +15,4 @@ public interface ICreatable {
     DateTimeOffset CreatedAt { get; }
     void SetCreatedAt(DateTimeOffset createdAt);
 }
-public interface IAggregate : ICreatable, IUpdatable, IDeletable;
+public interface IAggregate : ICreatable, IUpdatable, IDeletable, IHasDomainEvent;

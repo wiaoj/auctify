@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Auctify.Libraries.Mediator\Auctify.Libraries.Mediator.csproj" />
+    <ProjectReference Include="..\Auctify.WalletService.Domain\Auctify.WalletService.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Wallets\DomainEvents\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+@Auctify.WalletService.WebAPI_HostAddress = http://localhost:5293
+
+GET {{Auctify.WalletService.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
