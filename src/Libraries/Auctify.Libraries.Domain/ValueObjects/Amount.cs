@@ -12,6 +12,8 @@ public sealed record Amount : IValueObject<Amount, decimal>,
     IDivisionOperators<Amount, Amount, Amount>,
     IComparisonOperators<Amount, Amount, bool>,
     IEqualityOperators<Amount, Amount, bool> {
+
+    public static readonly Amount Zero = new(0M);
     public decimal Value { get; init; }
     private const int Decimals = 2;
 

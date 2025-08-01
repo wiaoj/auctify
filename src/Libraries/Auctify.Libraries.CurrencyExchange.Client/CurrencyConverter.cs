@@ -26,10 +26,9 @@ internal sealed class CurrencyConverter(IExchangeRateProvider rateProvider, ILog
                 Money convertedMoney = source * rate;
                 return ConversionResult.Success(convertedMoney);
             }
-
-            string error = $"Could not retrieve exchange rate for {pair}.";
-            logger.LogError(error);
-            return ConversionResult.Fail(error);
+             
+            logger.LogError("Could not retrieve exchange rate for {pair}.", pair);
+            return ConversionResult.Fail($"Could not retrieve exchange rate for {pair}.");
         }
         catch(Exception ex) {
             logger.LogError(ex, "An unexpected error occurred during currency conversion for {Pair}.", pair);
