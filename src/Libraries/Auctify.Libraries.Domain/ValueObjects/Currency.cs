@@ -15,9 +15,9 @@ public sealed partial record Currency : IValueObject<Currency, string> {
         this.Value = value;
     }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 
     private Currency() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning restore CS8618 
 
     public static Currency New(string value) {
         Preca.ThrowIfNullOrWhiteSpace(value);
@@ -27,7 +27,6 @@ public sealed partial record Currency : IValueObject<Currency, string> {
             ISO4217Regex().IsMatch(upperCode),
             static () => new ArgumentException("Currency code must be 3 alphabetic characters."));
 
-        // Doğrudan private constructor'ı çağırıyoruz.
         return new Currency(upperCode);
     }
 

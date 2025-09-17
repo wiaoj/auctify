@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Wiaoj.Corvus.Abstractions" Version="1.0.1" />
+    <PackageReference Include="Wiaoj.Corvus.Abstractions" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

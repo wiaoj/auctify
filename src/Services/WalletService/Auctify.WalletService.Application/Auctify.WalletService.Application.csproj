@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Auctify.WalletService.Domain\Auctify.WalletService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Wallets\DomainEvents\" />
-  </ItemGroup>
-
 </Project>

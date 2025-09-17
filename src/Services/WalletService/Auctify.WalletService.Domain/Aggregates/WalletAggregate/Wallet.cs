@@ -8,7 +8,7 @@ using Auctify.WalletService.Domain.Aggregates.WalletAggregate.ValueObjects;
 namespace Auctify.WalletService.Domain.Aggregates.WalletAggregate;
 public sealed class Wallet : Aggregate<WalletId> {
     public Guid UserId { get; private set; }
-    public Money Balance { get; private set; }
+    public Money Balance { get; private set; } 
 
     private readonly List<Transaction> transactions = [];
     public IReadOnlyCollection<Transaction> Transactions => this.transactions.AsReadOnly();

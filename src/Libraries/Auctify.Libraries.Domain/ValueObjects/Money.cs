@@ -11,9 +11,9 @@ public sealed record Money : IValueObject<Money, Amount, Currency>,
     public Amount Amount { get; }
     public Currency Currency { get; }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 
     private Money() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning restore CS8618 
 
     private Money(Amount amount, Currency currency) {
         this.Amount = amount;

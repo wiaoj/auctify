@@ -8,9 +8,9 @@ public sealed record ExchangeRate : IValueObject<ExchangeRate, CurrencyPair, Rat
     public CurrencyPair Pair { get; }
     public Rate Value { get; }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 
     private ExchangeRate() { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning restore CS8618 
     private ExchangeRate(CurrencyPair pair, Rate value) {
         this.Pair = pair;
         this.Value = value;
